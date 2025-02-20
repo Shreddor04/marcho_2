@@ -22,6 +22,8 @@
     "imagemin-mozjpeg": "^10.0.0",
     "imagemin-pngquant": "^10.0.0",
     "imagemin-svgo": "^11.0.1",
+    "ion-rangeslider": "^2.3.1",
+    "jquery-form-styler": "^2.0.2",
     "rateyo": "^2.3.2",
     "sass": "^1.78.0",
     "slick-carousel": "^1.8.1"
