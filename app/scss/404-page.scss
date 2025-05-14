@@ -1,0 +1,8 @@
+@import 'vars'; //будем подключать переменные 
+@import 'fonts'; //будемм подк. шрифты 
+@import 'reset'; //сброс всех настроик сайта 
+@import 'global'; //будут прописанны стили которые не раз появляються в нашем макете 
+@import '../module/_header/_header';
+@import '../module/_footer/_footer';
+
+

@@ -1,8 +1,11 @@
 const { src, dest, watch, parallel, series } = require('gulp');
-const scss = require('gulp-sass')(require('sass'));
-const concat = require('gulp-concat');
-const uglify = require('gulp-uglify');
-const browserSync = require('browser-sync');
+
+const scss                = require('gulp-sass')(require('sass'));
+const concat              = require('gulp-concat');
+const uglify              = require('gulp-uglify');
+const rename              = require('gulp-rename');
+const nunjucksRender      = require('gulp-nunjucks-render');
+const browserSync         = require('browser-sync');
 
 function browsersync() {
     browserSync.init({
@@ -16,15 +19,26 @@ function browsersync() {
 async function styles() {
     const autoprefixer = (await import('gulp-autoprefixer')).default;
 
-    return src('app/scss/styles.scss')
+    return src('app/scss/*.scss')
         .pipe(scss({ outputStyle: 'compressed' }))
-        .pipe(concat('style.min.css'))
+        // .pipe(concat())
+        .pipe(rename({
+            suffix: '.min'
+        }))
         .pipe(autoprefixer({
             overrideBrowserslist: ['last 10 versions'],
             grid: true
         }))
         .pipe(dest('app/css'))
         .pipe(browserSync.stream());
+}
+
+function nunjucks() {
+    return src('app/*.njk')
+        .pipe(nunjucksRender())
+        .pipe(dest('app'))
+        .pipe(browserSync.stream());
+    
 }
 
 function scripts() {
@@ -66,7 +80,8 @@ function build() {
 }
 
 function watching() {
-    watch(['app/scss/**/*.scss'], styles);
+    watch(['app/**/*.scss'], styles);
+    watch(['app/*.njk'], nunjucks);
     watch(['app/js/**/*.js', '!app/js/main.min.js'], scripts);
     watch(['app/**/*.html']).on('change', browserSync.reload);
 }
@@ -75,7 +90,10 @@ exports.styles = styles;
 exports.scripts = scripts;
 exports.browsersync = browsersync;
 exports.watching = watching;
+exports.nunjucks = nunjucks;
 exports.images = images;
 exports.cleanDist = cleanDist;
+
 exports.build = series(cleanDist, images, build);
-exports.default = parallel(styles, scripts, browsersync, watching);
+
+exports.default = parallel(nunjucks, styles, scripts, browsersync, watching);

@@ -1,0 +1,108 @@
+.blog {
+    padding: 50px 0 160px;
+    background-image: url('../images/blog_bg.jpg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+
+    &__items {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            right: -28px;
+            top: -25px;
+            z-index: -1;
+            width: 126px;
+            height: 53px;
+            background-image: url('../images/decoration/blog-decoration.svg');
+        }
+    }
+
+    &__item {
+        max-width: 370px;
+        border: 1px solid #ececec;
+
+        &:hover {
+            border: none;
+            box-shadow: 20px 0px 60px 0px rgba(202, 202, 202, 0.35);
+            transition: all .3s;
+
+            .blog__item-link {
+                color: $accent;
+
+                &::after {
+                    background-image: url('../images/icon/arrow_accent.svg');
+                }
+            }
+        }
+    }
+
+    &-img_link {
+        display: block;
+
+        img {
+            height: 228px;
+            object-fit: cover
+        }
+    }
+
+    &__item-box {
+        padding: 30px 40px;
+    }
+
+    &__item-title {
+        color: $title;
+        font-size: 22px;
+        @extend %roboto-400;
+        margin-bottom: 20px;
+    }
+
+    &__item-link {
+        position: relative;
+        transition: all .3s;
+    }
+
+    &__item-link::after {
+        content: '';
+        width: 10px;
+        height: 8px;
+        background-image: url('../images/icon/arrow.svg');
+        position: absolute;
+        top: 8px;
+        right: -14px;
+    }
+
+}
+
+.blog-box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    &__author,
+    &__date {
+        padding-left: 30px;
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            left: 0;
+            top: 4px;
+        }
+    }
+
+    &__author::before {
+        background-image: url('../images/icon/author.svg');
+    }
+
+    &__date::before {
+        background-image: url('../images/icon/time.svg');
+    }
+}
